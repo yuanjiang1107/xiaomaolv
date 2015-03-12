@@ -49,10 +49,10 @@
     BOOL is = [predicate evaluateWithObject:string];
     return is;
     
-    if ([DataCheckUtil containOnlyDigit:string] && string.length == 11) {
-        return YES;
-    }
-    return NO;
+//    if ([DataCheckUtil containOnlyDigit:string] && string.length == 11) {
+//        return YES;
+//    }
+//    return NO;
 }
 
 //电子邮箱校验

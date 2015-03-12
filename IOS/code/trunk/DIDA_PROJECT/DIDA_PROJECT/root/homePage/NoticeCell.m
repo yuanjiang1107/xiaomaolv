@@ -63,8 +63,7 @@ CREATE_STRONG UIButton *morebutton;
     [self showBg];
 }
 
-
--(CGFloat)heightForCellWidth:(id)data{
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 200;
 }
 

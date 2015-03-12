@@ -47,10 +47,10 @@
     [self showBg];
 }
 
-
--(CGFloat)heightForCellWidth:(id)data{
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 500;
 }
+
 
 
 

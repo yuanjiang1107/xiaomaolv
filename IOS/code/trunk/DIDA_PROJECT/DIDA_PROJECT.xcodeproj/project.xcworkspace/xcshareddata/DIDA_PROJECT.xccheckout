@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>00E3E20B-8802-480A-B499-AA77D7E6F999</string>
+	<key>IDESourceControlProjectName</key>
+	<string>DIDA_PROJECT</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>77e3e30d-e885-4f67-9a80-0e385ab64132++6630</key>
+		<string>svn://192.168.0.200/app/you1ke_ios</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>IOS/code/trunk/DIDA_PROJECT/DIDA_PROJECT.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>77e3e30d-e885-4f67-9a80-0e385ab64132++6630</key>
+		<string>../../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>77e3e30d-e885-4f67-9a80-0e385ab64132++6630</key>
+		<string>svn://192.168.0.200</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>svn://192.168.0.200/app/you1ke_ios/IOS/code/trunk/DIDA_PROJECT/DIDA_PROJECT.xcodeproj</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>77e3e30d-e885-4f67-9a80-0e385ab64132++6630</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>77e3e30d-e885-4f67-9a80-0e385ab64132++6630</string>
+			<key>IDESourceControlWCCName</key>
+			<string>you1ke_ios</string>
+		</dict>
+	</array>
+</dict>
+</plist>

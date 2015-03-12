@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14A389" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="6252" systemVersion="14B25" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="ChatMessage" representedClassName="ChatMessage" syncable="YES">
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="creatTime" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -7,6 +7,13 @@
         <attribute name="fromAvatar" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="isRead" optional="YES" attributeType="Boolean" syncable="YES"/>
         <attribute name="to" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+    </entity>
+    <entity name="Comment" representedClassName="Comment" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="fromName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="toName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="belongTo" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Feed" inverseName="commentList" inverseEntity="Feed" syncable="YES"/>
     </entity>
     <entity name="ContactEntity" representedClassName="ContactEntity" syncable="YES">
         <attribute name="relationship" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
@@ -19,8 +26,19 @@
         <attribute name="userStatus" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
         <attribute name="userWeight" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
     </entity>
+    <entity name="Feed" representedClassName="Feed" syncable="YES">
+        <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="feedId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ownerId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="ownerName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortId" optional="YES" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="unfold" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <relationship name="commentList" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Comment" inverseName="belongTo" inverseEntity="Comment" syncable="YES"/>
+    </entity>
     <elements>
         <element name="ChatMessage" positionX="-63" positionY="54" width="128" height="135"/>
         <element name="ContactEntity" positionX="-63" positionY="-18" width="128" height="180"/>
+        <element name="Feed" positionX="-63" positionY="63" width="128" height="148"/>
+        <element name="Comment" positionX="-54" positionY="72" width="128" height="118"/>
     </elements>
 </model>

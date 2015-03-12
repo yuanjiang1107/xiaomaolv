@@ -73,7 +73,7 @@ CREATE_STRONG UITabBarController *rootTabVc;
                                              selectedImage:[UIImage imageNamed:@"ios-icon-广场B.png"]];
     navV.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"ios-icon-我的A.png"]
                                             selectedImage:[UIImage imageNamed:@"ios-icon-我的B.png"]];
-    navVI.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"我" image:[UIImage imageNamed:@"ios-icon-消息A.png"]
+    navVI.tabBarItem = [[UITabBarItem alloc] initWithTitle:@"消息" image:[UIImage imageNamed:@"ios-icon-消息A.png"]
                                             selectedImage:[UIImage imageNamed:@"ios-icon-消息B.png"]];
 
     
@@ -91,7 +91,7 @@ CREATE_STRONG UITabBarController *rootTabVc;
     self.tabBar.barTintColor = DIDA_NAVIGATIONBAR_COLOR;
     self.tabBar.translucent = YES;
     
-    self.selectedIndex = 4;
+    self.selectedIndex = 0;
     // Do any additional setup after loading the view.
 }
 

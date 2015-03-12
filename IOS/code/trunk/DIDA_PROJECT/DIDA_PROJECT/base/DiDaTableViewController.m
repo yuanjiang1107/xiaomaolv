@@ -17,7 +17,7 @@
     self = [super init];
     if (self) {
         self.tableView = [[UITableView alloc]initWithFrame:[UIScreen mainScreen].bounds style:style];
-        self.tableView.backgroundColor = DIDA_BACKGROUND_COLOR;
+        self.tableView.backgroundColor = [UIColor clearColor];
         self.hidesBottomBarWhenPushed = YES;
     }
     return self;
@@ -31,19 +31,14 @@
     //self.edgesForExtendedLayout = UIRectEdgeNone;
     [super viewDidLoad];
     [self.view addSubview:self.tableView];
-    //self.navigationController.navigationBar.barTintColor = RGBCOLOR(225, 102, 102);
-    //self.navigationController.navigationBar.backgroundColor = RGBCOLOR(225, 102, 102);
     self.tableView.frame = self.view.frame;
     self.tableView.delegate = self;
     self.tableView.dataSource = self;
     self.tableView.separatorStyle = [self DiDaTableViewSeparatorStyle];
-    //[self.view addSubview:self.tableView];
-    // Do any additional setup after loading the view.
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -56,7 +51,11 @@
 
 -(void)viewDidLayoutSubviews{
     [super viewDidLayoutSubviews];
-//    self.tableView.frame = self.view.frame;
+}
+
+-(void)firstDidLayoutSubViews{
+    [super firstDidLayoutSubViews];
+    self.tableView.frame = self.view.bounds;
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section{
@@ -68,13 +67,13 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    
     Class obj_class = [self cellClassForRowAtIndexPath:indexPath];
-    DiDaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:[self reusableIdentifierWithClass:obj_class]];
-    if (cell == nil) {
-        cell = [[obj_class alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:[self reusableIdentifierWithClass:obj_class]];
-    }
-    CGFloat height = [cell heightForCellWidth:[self.fetchController objectAtIndexPath:indexPath]];
+    CGFloat height = [obj_class heightForClassCellWidth:[self.fetchController objectAtIndexPath:indexPath]
+                                               position:[self positionForCellAtIndex:indexPath]];
     return height;
+
 }
 
 
@@ -143,6 +142,25 @@
 -(UITableViewCellAccessoryType)DiDaTableViewCellAccessoryType{
     return UITableViewCellAccessoryNone;
 }
+
+
+
+
+- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler{
+//    UIImage *logo = [UIImage imageNamed:@"pull_logoBg.png"];
+//    UIImageView *logoView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, logo.size.width, logo.size.height)];
+//    logoView.image = logo;
+//    logoView.centerX = self.view.width / 2;
+//    [self.view addSubview:logoView];
+//    [self.view sendSubviewToBack:logoView];
+//    self.view.backgroundColor = DIDA_NAVIGATIONBAR_COLOR;
+    [self.tableView addPullToRefreshWithActionHandler:actionHandler];
+}
+
+- (void)addInfiniteScrollingWithActionHandler:(void (^)(void))actionHandler{
+    [self.tableView addInfiniteScrollingWithActionHandler:actionHandler];
+}
+
 
 /*
 #pragma mark - Navigation

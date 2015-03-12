@@ -8,9 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef void (^SearchToolBarSelectedBlock)(NSInteger index);
+
 @interface SearchToolBar : UIView
 
--(instancetype)initWithNames:(NSArray*)names;
+-(instancetype)initWithNames:(NSArray*)names currentIndex:(NSInteger)index selectedBlock:(SearchToolBarSelectedBlock)block;
 
 @end
 

@@ -7,8 +7,8 @@
 //
 
 #import "DiDaTableViewController.h"
-
-@interface ActivityListViewController : DiDaTableViewController
+#import "DiDaContentTableViewController.h"
+@interface ActivityListViewController : DiDaContentTableViewController
 
 
 @end

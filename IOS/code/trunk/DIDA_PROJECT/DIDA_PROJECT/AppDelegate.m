@@ -44,9 +44,6 @@
     
     [WeiboSDK enableDebugMode:YES];
     [WeiboSDK registerApp:@"4096671619"];
-    
-    NSDictionary *dic = [[NSBundle mainBundle] infoDictionary];
-    
     [WXApi registerApp:@"wxd930ea5d5a258f4f" withDescription:@"demo 2.0"];
 
     

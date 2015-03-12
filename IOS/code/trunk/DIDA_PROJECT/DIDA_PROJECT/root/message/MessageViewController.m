@@ -37,7 +37,9 @@ CREATE_STRONG DiDaSegmentControl *segmentControl;
     [super viewDidLoad];
     self.title = @"消息";
     NSArray *titles = @[@"系统消息", @"好友消息", @"临时消息"];
-    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles eventCallBack:^(NSInteger selectedIndex) {
+    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles
+                                                       currentIndex:-1
+                                                      eventCallBack:^(BOOL selected, NSInteger selectedIndex) {
         self.currentPage = selectedIndex;
     }];
     _currentPage = 1;

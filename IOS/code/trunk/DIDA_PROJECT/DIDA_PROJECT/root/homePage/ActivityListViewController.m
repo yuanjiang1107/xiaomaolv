@@ -150,6 +150,7 @@
 }
 
 -(Class)cellClassForRowAtIndexPath:(NSIndexPath *)indexPath{
+
     switch (indexPath.section) {
         case 0:
             if (indexPath.row == 0) {
@@ -214,6 +215,14 @@
 
 
 
+-(void)catalogDidSelectedItemWith:(NSInteger)index title:(NSString *)title{
+    
+}
+
+-(void)contentViewToolBarDidSelectedItem:(NSInteger)index{
+    
+        
+}
 
 /*
 #pragma mark - Navigation

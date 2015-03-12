@@ -80,12 +80,15 @@ CREATE_STRONG UILabel *crowdfundingDetail;
 }
 
 
--(CGFloat)heightForCellWidth:(id)data{
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
+    [super heightForClassCellWidth:data position:position];
+    Top5Cell *cell = (Top5Cell*)gCellReference;
     CGFloat width = [UIDevice screenWidth] - 2 * cellContentLeftInset;
-    [self configCellWithData:nil position:CellPositionBottom];
-    CGFloat height = [self.title sizeThatFits:CGSizeMake(width, 1000)].height + [self.content sizeThatFits:CGSizeMake(width, 1000)].height + cellBaseHeight;
+    [cell configCellWithData:nil position:CellPositionBottom];
+    CGFloat height = [cell.title sizeThatFits:CGSizeMake(width, 1000)].height + [cell.content sizeThatFits:CGSizeMake(width, 1000)].height + cellBaseHeight;
     return height;
 
 }
+
 
 @end

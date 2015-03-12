@@ -56,12 +56,11 @@ CREATE_STRONG UIView  *videoView;
     self.videoView.backgroundColor = [UIColor blueColor];
 }
 
-
--(CGFloat)heightForCellWidth:(id)data{
-    [self configCellWithData:nil position:CellPositionTop];
-    CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 315;
 }
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

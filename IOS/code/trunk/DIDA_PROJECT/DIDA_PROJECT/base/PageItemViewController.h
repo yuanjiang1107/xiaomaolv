@@ -7,7 +7,12 @@
 //
 
 #import "DidaViewController.h"
+#import "DiDaImagesViewController.h"
 
-@interface PageItemViewController : DidaViewController
+@interface PageItemViewController : DidaViewController<DiDaImagesViewControllerPageViewContollerProtocol>
+
+-(instancetype)initWithImageUrl:(NSString*)imageUrl;
+
+@property(nonatomic, assign)NSInteger pageIndex;
 
 @end

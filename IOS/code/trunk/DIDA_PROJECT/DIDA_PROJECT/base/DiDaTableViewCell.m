@@ -73,12 +73,22 @@
     self.backgroundColor = [UIColor clearColor];
 }
 
--(CGFloat)heightForCellWidth:(id)data{
-    if (IOS7_OR_EARLIER && self.contentView.translatesAutoresizingMaskIntoConstraints == YES) {
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
+    DiDaTableViewCell* cellReference;
+    
+    if ([[NSString stringWithFormat:@"%@", self] isEqualToString:[NSString stringWithFormat:@"%@", [gCellReference class]]]){
+        cellReference = (DiDaTableViewCell*)gCellReference;
+    }else{
+        cellReference = [[self alloc] init];
+        gCellReference = cellReference;
+    }
+    
+    if (IOS6_OR_EARLIER && cellReference.contentView.translatesAutoresizingMaskIntoConstraints == YES) {
         return 44;
     }
-    [self configCellWithData:data position:CellPositionTop];
-    CGSize size = [self.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+    [cellReference configCellWithData:data position:position];
+    
+    CGSize size = [cellReference.contentView systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
     return size.height;
 }
 

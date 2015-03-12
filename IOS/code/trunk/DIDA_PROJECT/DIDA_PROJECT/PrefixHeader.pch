@@ -39,6 +39,6 @@
 #import "UIView+AutoLayout.h"
 #import "NSMutableAttributedString+ad.h"
 #import "DiDaButton.h"
-
+#import "NSString+LbHeight.h"
 
 #endif

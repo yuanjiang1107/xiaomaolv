@@ -74,8 +74,21 @@
     
 }
 
+-(void)setSelectedType:(MyDRFListSelectedType)selectedType{
+    _selectedType = selectedType;
+    if (selectedType == MyDRFListSelectedTypeDream) {
+        self.title = @"我的梦想";
+    }
+    
+    if (selectedType == MyDRFListSelectedTypeFeed) {
+        self.title = @"我的动态";
+    }
+}
+
 -(void)configSegmentControlWith:(NSArray*)titles{
-    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles eventCallBack:^(NSInteger selectedIndex) {
+    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles
+                                                      currentIndex:-1
+                                                      eventCallBack:^(BOOL selected , NSInteger selectedIndex) {
         self.subtype = selectedIndex;
         [self.tableView reloadData];
     }];

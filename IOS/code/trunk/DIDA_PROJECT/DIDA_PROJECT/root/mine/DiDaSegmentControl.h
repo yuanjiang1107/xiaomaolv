@@ -8,16 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void (^DiDaSegmentControlEventBlock)(NSInteger selectedIndex);
+typedef void (^DiDaSegmentControlEventBlock)(BOOL selected ,NSInteger selectedIndex);
 
 @interface DiDaSegmentControl : UIView{
+    
 }
 
 -(instancetype)initWithImages:(NSArray*)images eventCallBack:(DiDaSegmentControlEventBlock)block;
 
--(instancetype)initWithTitle:(NSArray*)titles eventCallBack:(DiDaSegmentControlEventBlock)block;
-
-
+-(instancetype)initWithTitle:(NSArray *)titles currentIndex:(NSInteger)currentIndex eventCallBack:(DiDaSegmentControlEventBlock)block;
 
 -(void)setSelectedIndex:(NSInteger)index;
 @end

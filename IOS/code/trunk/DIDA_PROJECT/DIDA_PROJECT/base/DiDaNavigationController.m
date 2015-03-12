@@ -17,8 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.navigationBar.tintColor = [UIColor whiteColor];
+    self.navigationBar.translucent = NO;
     self.navigationBar.barTintColor = DIDA_NAVIGATIONBAR_COLOR;
-
+    
+    
+    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:[UIColor whiteColor], NSForegroundColorAttributeName, [UIFont boldSystemFontOfSize:18.0f], NSFontAttributeName, nil];
+    self.navigationBar.titleTextAttributes = dic;
     // Do any additional setup after loading the view.
 }
 

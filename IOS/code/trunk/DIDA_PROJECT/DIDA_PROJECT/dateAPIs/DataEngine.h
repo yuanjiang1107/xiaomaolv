@@ -96,8 +96,11 @@ typedef void (^onCompletedBlock)(NSDictionary *sourceDic, NSInteger errorCode, N
 
 - (MKHttpReqeust*)getDreamDetail:(NSString*)dreamId onComplete:(onCompletedBlock)block;
 
+- (MKHttpReqeust*)getRecommendListWithOnComplete:(onCompletedBlock)block;
+
 - (MKHttpReqeust*)getNotificationStats:(NSArray*)tag onComplete:(onCompletedBlock)block;
 
+- (MKHttpReqeust*)getFeedListOnComplete:(onCompletedBlock)block;
 
 
 

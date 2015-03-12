@@ -135,14 +135,14 @@
     self.destinationsIcon.backgroundColor = [UIColor blackColor];
     self.dateIcon.backgroundColor = [UIColor blackColor];
     self.focusNumIcon.backgroundColor = [UIColor blackColor];
-    
+    self.backgroundColor = [UIColor greenColor];
 }
 
--(CGFloat)heightForCellWidth:(id)data{
-    [self configCellWithData:nil position:CellPositionTop];
-    CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
+
+
+
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 500;
 }
-
 
 @end

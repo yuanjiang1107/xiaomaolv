@@ -37,6 +37,7 @@
         [self firstWillApear];
         self.willAppear = YES;
     }
+    
 }
 
 -(void)viewDidAppear:(BOOL)animated{

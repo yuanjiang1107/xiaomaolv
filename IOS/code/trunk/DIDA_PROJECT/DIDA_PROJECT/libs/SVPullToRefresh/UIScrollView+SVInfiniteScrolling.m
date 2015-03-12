@@ -11,7 +11,9 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 
 
-static CGFloat const SVInfiniteScrollingViewHeight = 60;
+static CGFloat const SVInfiniteScrollingViewHeight = 568;
+
+static CGFloat const trrigerHeight = 40;
 
 @interface SVInfiniteScrollingDotView : UIView
 
@@ -128,7 +130,7 @@ UIEdgeInsets scrollViewOriginalContentInsets;
     if(self = [super initWithFrame:frame]) {
         
         // default styling values
-        self.activityIndicatorViewStyle = UIActivityIndicatorViewStyleGray;
+//        self.activityIndicatorViewStyle = UIActivityIndicatorViewStyleWhite;
         self.autoresizingMask = UIViewAutoresizingFlexibleWidth;
         self.state = SVInfiniteScrollingStateStopped;
         self.enabled = YES;
@@ -137,15 +139,16 @@ UIEdgeInsets scrollViewOriginalContentInsets;
         lab.text = @"stop";
         lab.textColor = [UIColor blackColor];
         UILabel *lab1 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        lab1.text = @"Triggered";
-        lab1.textColor  = [UIColor blackColor];
+        lab1.text = @"加载更多";
+        lab1.textColor  = [UIColor whiteColor];
+        lab1.font = [UIFont systemFontOfSize:12.0];
 
         UILabel *lab2 = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 100, 20)];
-        lab2.text = @"loading";
-        lab2.textColor = [UIColor blackColor];
-
-        
-//        self.viewForState = [NSMutableArray arrayWithObjects:lab, lab1, @"", @"", nil];
+        lab2.text = @"加载中...";
+        lab2.textColor = [UIColor whiteColor];
+        lab2.font = [UIFont systemFontOfSize:12.0];
+        self.backgroundColor = DIDA_NAVIGATIONBAR_COLOR;
+        self.viewForState = [NSMutableArray arrayWithObjects:@"", lab1, lab2, @"", nil];
     }
     
     return self;
@@ -165,7 +168,7 @@ UIEdgeInsets scrollViewOriginalContentInsets;
 }
 
 - (void)layoutSubviews {
-    self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+//    self.activityIndicatorView.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
 }
 
 #pragma mark - Scroll View
@@ -178,7 +181,7 @@ UIEdgeInsets scrollViewOriginalContentInsets;
 
 - (void)setScrollViewContentInsetForInfiniteScrolling {
     UIEdgeInsets currentInsets = self.scrollView.contentInset;
-    currentInsets.bottom = self.originalBottomInset + SVInfiniteScrollingViewHeight;
+    currentInsets.bottom = self.originalBottomInset + trrigerHeight;
     [self setScrollViewContentInset:currentInsets];
 }
 
@@ -223,6 +226,9 @@ UIEdgeInsets scrollViewOriginalContentInsets;
     if(!_activityIndicatorView) {
         _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         _activityIndicatorView.hidesWhenStopped = YES;
+        _activityIndicatorView.color = DIDA_ORANGE_COLOR;
+        _activityIndicatorView.tintColor = DIDA_ORANGE_COLOR;
+        [_activityIndicatorView startAnimating];
         [self addSubview:_activityIndicatorView];
     }
     return _activityIndicatorView;
@@ -286,17 +292,22 @@ UIEdgeInsets scrollViewOriginalContentInsets;
     if(hasCustomView) {
         [self addSubview:customView];
         CGRect viewBounds = [customView bounds];
-        CGPoint origin = CGPointMake(roundf((self.bounds.size.width-viewBounds.size.width)/2), roundf((self.bounds.size.height-viewBounds.size.height)/2));
-        [customView setFrame:CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)];
+        CGPoint origin = CGPointMake(roundf((self.bounds.size.width-viewBounds.size.width)/2), 10);
+        [customView setFrame:CGRectMake(origin.x + 35, origin.y, viewBounds.size.width, viewBounds.size.height)];
+        
+        CGRect activityViewBounds = [self.activityIndicatorView bounds];
+        CGPoint activityOrigin = CGPointMake(roundf((self.bounds.size.width-viewBounds.size.width)/2), 10);
+        [self.activityIndicatorView setFrame:CGRectMake(activityOrigin.x + 5, 10, activityViewBounds.size.width, activityViewBounds.size.height)];
+        [self bringSubviewToFront:self.activityIndicatorView];
     }
     else {
         CGRect viewBounds = [self.activityIndicatorView bounds];
         CGPoint origin = CGPointMake(roundf((self.bounds.size.width-viewBounds.size.width)/2), roundf((self.bounds.size.height-viewBounds.size.height)/2));
-        [self.activityIndicatorView setFrame:CGRectMake(origin.x, origin.y, viewBounds.size.width, viewBounds.size.height)];
+        [self.activityIndicatorView setFrame:CGRectMake(origin.x, 15, viewBounds.size.width, viewBounds.size.height)];
         
         switch (newState) {
             case SVInfiniteScrollingStateStopped:
-                [self.activityIndicatorView stopAnimating];
+//                [self.activityIndicatorView stopAnimating];
                 break;
                 
             case SVInfiniteScrollingStateTriggered:

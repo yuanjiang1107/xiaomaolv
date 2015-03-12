@@ -25,7 +25,9 @@
     [super viewDidLoad];
     self.title = @"我的好友管理";
     NSArray *titles = [[NSArray alloc] initWithObjects:@"最近添加", @"资助梦想", @"特别关注", nil];
-    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles eventCallBack:^(NSInteger selectedIndex) {
+    self.segmentControl = [[DiDaSegmentControl alloc] initWithTitle:titles
+                                                      currentIndex:-1
+                                                      eventCallBack:^(BOOL selected , NSInteger selectedIndex) {
         
     }];
     self.segmentControl.frame = CGRectMake(0, 0, [UIDevice screenWidth], 40);

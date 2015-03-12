@@ -8,28 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
+ NSObject *gCellReference;
+
+
+
 typedef enum {
-    CellPositionTop,
-    CellPositionMid,
-    CellPositionBottom
+    CellPositionTop = 1,
+    CellPositionMid = 1<<1,
+    CellPositionBottom = 1<<2
 }CellPosition;
-
-
-typedef enum{
-    SeparatorStyleNone,
-    SeparatorStyleMid,
-    SeparatorStyleAll,
-}SeparatorStyle;
 
 #define cellContentLeftInset 10
 
 
 @interface DiDaTableViewCell : UITableViewCell
 
--(CGFloat)heightForCellWidth:(id)data;
++(CGFloat)heightForClassCellWidth:(id)data  position:(CellPosition)position;
 
 -(void)configCellWithData:(id)data position:(CellPosition)position;
-
 
 
 CREATE_ASSIGN CellPosition cellPosition;

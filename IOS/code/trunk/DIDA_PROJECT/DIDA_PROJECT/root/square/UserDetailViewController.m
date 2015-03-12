@@ -12,9 +12,10 @@
 #import "UIImageView+WebCache.h"
 #import "UIButton+WebCache.h"
 #import "DiDaImagesViewController.h"
+#import "DismissAnimation.h"
 
 
-@interface UserDetailViewController ()
+@interface UserDetailViewController ()<UIViewControllerTransitioningDelegate>
 
 @property(nonatomic, strong) UIButton *shieldButton;
 @property(nonatomic, strong) UIButton *accusationButton;
@@ -199,7 +200,10 @@
 
 -(void)buttonEvent:(UIButton*)button{
     DiDaImagesViewController *vc = [[DiDaImagesViewController alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+    self.transitioningDelegate = self;
+    vc.transitioningDelegate = self;
+//    [self.navigationController pushViewController:vc animated:YES];
+    [self presentViewController:vc animated:NO completion:nil];
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
@@ -234,6 +238,16 @@
 
 -(UITableViewCellAccessoryType)DiDaTableViewCellAccessoryType{
     return UITableViewCellAccessoryDisclosureIndicator;
+}
+
+
+- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source
+{
+    return [[DismissAnimation alloc] init];
+}
+
+-(id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed{
+    return [[DismissAnimation alloc] init];
 }
 
 

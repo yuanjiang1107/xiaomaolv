@@ -42,7 +42,8 @@
 -(void)barSearchEvent:(id)sender{
     SearchViewController *vc =[[SearchViewController alloc] init];
     UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:vc];
-    
+    nav.navigationBar.barTintColor = DIDA_NAVIGATIONBAR_COLOR;
+    nav.navigationBar.tintColor = [UIColor lightGrayColor];
     [self.navigationController  setNavigationBarHidden:YES animated:YES];
     vc.delegate = self;
     [self presentViewController:nav animated:NO completion:^{

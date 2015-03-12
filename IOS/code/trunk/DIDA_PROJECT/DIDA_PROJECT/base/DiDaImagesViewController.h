@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol DiDaImagesViewControllerPageViewContollerProtocol <NSObject>
+
+@property(nonatomic, assign)NSInteger pageIndex;
+
+@end
+
+
+
 @interface DiDaImagesViewController : UIViewController
 
 @end

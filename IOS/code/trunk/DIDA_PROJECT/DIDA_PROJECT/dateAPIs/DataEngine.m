@@ -8,6 +8,9 @@
 #import "DataEngine.h"
 #import "ErrorCodeUtils.h"
 #import "ContactEntity.h"
+#import "Feed.h"
+#import "Comment.h"
+
 
 #define ITUNES_APPID @"284910350"
 
@@ -334,6 +337,17 @@ static DataEngine *dataEngineInstance = nil;
     return r;
 }
 
+
+
+
+
+
+
+
+#pragma -mark 接口
+
+
+
 - (MKHttpReqeust*)getDreamDetail:(NSString*)dreamId onComplete:(onCompletedBlock)block{
     NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:dreamId,@"id", nil];
     MKHttpReqeust *r = [self requestPOSTWithApi:@"dream/details"
@@ -350,6 +364,104 @@ static DataEngine *dataEngineInstance = nil;
     return r;
     
 };
+
+
+
+- (MKHttpReqeust*)getRecommendListWithOnComplete:(onCompletedBlock)block{
+//    NSDictionary *dic = [NSDictionary dictionaryWithObjectsAndKeys:dreamId,@"id", nil];
+    MKHttpReqeust *r = [self requestPOSTWithApi:@"adv/index"
+                                          param:nil
+                               completOpeartion:^(MKNetworkOperation *completedOperation) {
+                                   NSDictionary *dic = [completedOperation responseJSON];
+                                   NSInteger internalCode = [self getErrorCode:dic];
+                                   
+                                   if (internalCode == RequestErrorCodeSuccess) {
+                                       [self serverData:[dic objectForKey:@"notice"] hasMore:NO otherData:nil onComplete:block];
+                                   }else{
+                                       [self serverData:nil hasMore:NO otherData:nil onComplete:block];
+                                   }
+                                   
+                               } errorOperation:^(MKNetworkOperation *completedOperation, NSError *error) {
+                                   [self connectError:error onComplete:block];
+                               }];
+    return r;
+
+}
+
+- (MKHttpReqeust*)getFeedListOnComplete:(onCompletedBlock)block{
+    [self performSelector:@selector(test) withObject:nil afterDelay:1];
+    return nil;
+}
+
+-(void)test{
+    Feed *feed = [Feed MR_createEntity];
+    feed.ownerName = @"小豆面馆";
+    feed.content = @"小豆面馆好好吃呀 好好吃";
+    
+    
+    Comment *info = [Comment MR_createEntity];
+    info.fromName = @"王海洋";
+    info.toName = @"贾双核";
+    info.content = @"俄罗斯风情 大大的有";
+    [feed addCommentListObject:info];
+    
+    info = [Comment MR_createEntity];
+    info.fromName = @"贾双核";
+    info.toName = @"吕金龙";
+    info.content = @"亮马桥 大大的有发解放啦嘉陵道街阿里觉得垃圾分类的立法交流法拉第";
+    [feed addCommentListObject:info];
+    
+    info = [Comment MR_createEntity];
+    info.fromName = @"王海洋";
+    info.toName = @"吕金龙";
+    info.content = @"姿势控";
+    [feed addCommentListObject:info];
+    
+    info = [Comment MR_createEntity];
+    info.fromName = @"王海洋";
+    info.toName = @"吕金龙";
+    info.content = @"姿势控";
+    [feed addCommentListObject:info];
+    
+    
+    feed = [Feed MR_createEntity];
+    feed.ownerName = @"大食代";
+    feed.content = @"小豆面馆好好吃呀 好好吃的发掘的\n垃\n圾\n堆\n里的立法局阿里放假啊了解到的就发垃\n圾地方啦解放啦放假\n啊垃圾发生";
+    
+    
+    feed = [Feed MR_createEntity];
+    feed.ownerName = @"华茂城";
+    feed.content = @"华茂楼下除了贵 别的也就一般般 不过我喜欢";
+
+    feed = [Feed MR_createEntity];
+    feed.ownerName = @"华茂城";
+    feed.content = @"华茂楼下除了贵 别的也就一般般 不过我喜欢";
+
+    feed = [Feed MR_createEntity];
+    feed.ownerName = @"华茂城";
+    feed.content = @"华茂楼下除了贵 别的也就一般般 不过我喜欢";
+    info = [Comment MR_createEntity];
+    info.fromName = @"贾双核";
+    info.toName = @"吕金龙";
+    info.content = @"亮马桥 大大的有发解放啦嘉陵道街阿里觉得垃圾分类的立法交流法拉第";
+    [feed addCommentListObject:info];
+    
+    info = [Comment MR_createEntity];
+    info.fromName = @"王海洋";
+    info.toName = @"吕金龙";
+    info.content = @"姿势控";
+    [feed addCommentListObject:info];
+    
+    info = [Comment MR_createEntity];
+    info.fromName = @"王海洋";
+    info.toName = @"吕金龙";
+    info.content = @"姿势控";
+    [feed addCommentListObject:info];
+}
+
+
+
+
 
 //
 //-(MKHttpReqeust*)loadSliderList:(onCompletedBlock)block{

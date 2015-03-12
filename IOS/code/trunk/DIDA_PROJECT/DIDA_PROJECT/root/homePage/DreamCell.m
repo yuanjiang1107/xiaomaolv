@@ -95,7 +95,7 @@ CREATE_STRONG UIView *separateLine;
                                                         textAlignment:NSTextAlignmentLeft];
         
         self.separateLine = [[UIView alloc] init];
-        self.separateLine.backgroundColor = RGBCOLOR(226, 226, 226);
+        self.separateLine.backgroundColor = RGBCOLOR(126, 226, 226);
         [self addSubview:self.separateLine];
 
         [self.contentView addSubview:self.bgImage];

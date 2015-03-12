@@ -50,44 +50,44 @@ CREATE_STRONG RTLabel *promptLb;
         
         self.promptIcon = [[UIImageView alloc] initForAutoLayout];
         self.promptIcon.backgroundColor = [UIColor blackColor];
-        self.promptLb = [[RTLabel alloc] initForAutoLayout];
+        self.promptLb = [[RTLabel alloc] initWithFrame:CGRectMake(0, 0, [UIDevice screenWidth] - 100, 0)];
         
-        [self addsubviewToContentView:@[self.priceLb, self.signUpButton, self.crowdfundingButton, self.promptIcon, self.promptLb]];
+//        [self addsubviewToContentView:@[self.priceLb, self.signUpButton, self.crowdfundingButton, self.promptIcon, self.promptLb]];
+        [self.contentView addSubview:self.promptLb];
         
-        
-        
-        
-        [self.priceLb autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10];
-        [self.priceLb autoAlignAxisToSuperviewAxis:ALAxisVertical];
-        [self.signUpButton  autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.priceLb withOffset:10];
-        [self.crowdfundingButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.signUpButton withOffset:10];
-        [self.promptIcon autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.crowdfundingButton withOffset:10];
-        [self.promptLb autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.crowdfundingButton withOffset:10];
-        
-        [self.signUpButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:40];
-        [self.signUpButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:40];
-        [self.signUpButton autoSetDimension:ALDimensionHeight toSize:30];
-        
-        [self.crowdfundingButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.signUpButton];
-        [self.crowdfundingButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.signUpButton];
-        [self.crowdfundingButton autoSetDimension:ALDimensionHeight toSize:30];
-        
-        
-        [self.promptLb autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:30];
-        [self.promptLb autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:30];
-        [self.promptLb autoSetDimension:ALDimensionHeight toSize:100];
-        
-        [self.promptIcon autoSetDimensionsToSize:CGSizeMake(10, 10)];
-        [self.promptIcon autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.promptLb withOffset:-5];
-        
-        
-        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.contentView
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                      relatedBy:NSLayoutRelationEqual
-                                                                         toItem:self.promptLb
-                                                                      attribute:NSLayoutAttributeBottom
-                                                                     multiplier:1.0
-                                                                       constant:10];
+//        
+//        
+//        [self.priceLb autoPinEdgeToSuperviewEdge:ALEdgeTop withInset:10];
+//        [self.priceLb autoAlignAxisToSuperviewAxis:ALAxisVertical];
+//        [self.signUpButton  autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.priceLb withOffset:10];
+//        [self.crowdfundingButton autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.signUpButton withOffset:10];
+//        [self.promptIcon autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.crowdfundingButton withOffset:10];
+//        [self.promptLb autoPinEdge:ALEdgeTop toEdge:ALEdgeBottom ofView:self.crowdfundingButton withOffset:10];
+//        
+//        [self.signUpButton autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:40];
+//        [self.signUpButton autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:40];
+//        [self.signUpButton autoSetDimension:ALDimensionHeight toSize:30];
+//        
+//        [self.crowdfundingButton autoPinEdge:ALEdgeLeft toEdge:ALEdgeLeft ofView:self.signUpButton];
+//        [self.crowdfundingButton autoMatchDimension:ALDimensionWidth toDimension:ALDimensionWidth ofView:self.signUpButton];
+//        [self.crowdfundingButton autoSetDimension:ALDimensionHeight toSize:30];
+//        
+//        
+//        [self.promptLb autoPinEdgeToSuperviewEdge:ALEdgeLeft withInset:30];
+//        [self.promptLb autoPinEdgeToSuperviewEdge:ALEdgeRight withInset:30];
+//        [self.promptLb autoSetDimension:ALDimensionHeight toSize:100];
+//        
+//        [self.promptIcon autoSetDimensionsToSize:CGSizeMake(10, 10)];
+//        [self.promptIcon autoPinEdge:ALEdgeRight toEdge:ALEdgeLeft ofView:self.promptLb withOffset:-5];
+//        
+//        
+//        NSLayoutConstraint *constraint = [NSLayoutConstraint constraintWithItem:self.contentView
+//                                                                      attribute:NSLayoutAttributeBottom
+//                                                                      relatedBy:NSLayoutRelationEqual
+//                                                                         toItem:self.promptLb
+//                                                                      attribute:NSLayoutAttributeBottom
+//                                                                     multiplier:1.0
+//                                                                       constant:10];
         
 //        [self.contentView addConstraint:constraint];
 
@@ -99,17 +99,26 @@ CREATE_STRONG RTLabel *promptLb;
 }
 
 
+-(void)layoutSubviews{
+    [super layoutSubviews];
+    CGSize optimumSize = [self.promptLb optimumSize];
+    CGRect frame = [self.promptLb frame];
+    frame.size.height = (int)optimumSize.height;
+    [self.promptLb setFrame:frame];
+    self.promptLb.bottom = self.height;
+}
+
 -(void)configCellWithData:(id)data position:(CellPosition)position{
     self.priceLb.text = @"费用¥7803／人";
     self.promptLb.text = [NSString stringWithFormat:promptTextFormate, @"23244"];
-
+    self.promptLb.backgroundColor = [UIColor redColor];
 }
 
--(CGFloat)heightForCellWidth:(id)data{
-    [self configCellWithData:nil position:CellPositionTop];
-    CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 300;
 }
+
+
 
 /*
 // Only override drawRect: if you perform custom drawing.

@@ -215,6 +215,9 @@
 	CGColorSpaceRef rgbColorSpace = CGColorSpaceCreateDeviceRGB();
 	CGColorSpaceRelease(rgbColorSpace);
 	CFDictionaryAddValue( styleDict1, kCTForegroundColorAttributeName, [self.textColor CGColor] );
+    CFDictionaryAddValue( styleDict1, kCTStrokeColorAttributeName, [UIColor greenColor].CGColor );
+
+    
 	CFAttributedStringSetAttributes( attrString, CFRangeMake( 0, CFAttributedStringGetLength(attrString) ), styleDict1, 0 ); 
 	
 	CFMutableDictionaryRef styleDict = ( CFDictionaryCreateMutable( (0), 0, (0), (0) ) );
@@ -360,9 +363,8 @@
 					
 					CGFloat button_width = primaryOffset2 - primaryOffset;
 					
-					RTLabelButton *button = [[RTLabelButton alloc] initWithFrame:CGRectMake(primaryOffset+origin.x, height, button_width, ascent+descent)];
+					RTLabelButton *button = [[RTLabelButton alloc] initWithFrame:CGRectMake(primaryOffset+origin.x - 2, height - 4, button_width + 4, ascent+descent)];
 					
-					[button setBackgroundColor:[UIColor colorWithWhite:0 alpha:0]];
 					[button setComponentIndex:linkableComponents.componentIndex];
 					
 					[button setUrl:[NSURL URLWithString:[linkableComponents.attributes objectForKey:@"href"]]];
@@ -370,6 +372,17 @@
 					[button addTarget:self action:@selector(onButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
 					[button addTarget:self action:@selector(onButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
                     [self addSubview:button];
+                    
+//                    button.backgroundColor = [UIColor greenColor];
+                    
+//                    CGContextSaveGState(context);
+//                    CGContextTranslateCTM(context, 0, _optimumSize.height); // B
+//                    CGContextScaleCTM(context, 1, -1);                     //A
+//                    CGContextSetRGBFillColor(context, 1, 1, 0.5, 1);
+//                    CGContextFillRect(context, CGRectMake(button.frame.origin.x - 2, button.frame.origin.y - 4, button.frame.size.width + 4, button.frame.size.height));
+//                    CGContextStrokePath(context);
+//                    CGContextRestoreGState(context);
+
 					
 				}
 				
@@ -379,6 +392,87 @@
 		}
 	}
 	
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    if (1)
+    {
+        // only check for linkable items the first time, not when it's being redrawn on button pressed
+        
+        for (RTLabelComponent *linkableComponents in links)
+        {
+            float height = 0.0;
+            CFArrayRef frameLines = CTFrameGetLines(frame);
+            for (CFIndex i=0; i<CFArrayGetCount(frameLines); i++)
+            {
+                CTLineRef line = (CTLineRef)CFArrayGetValueAtIndex(frameLines, i);
+                CFRange lineRange = CTLineGetStringRange(line);
+                CGFloat ascent;
+                CGFloat descent;
+                CGFloat leading;
+                
+                CTLineGetTypographicBounds(line, &ascent, &descent, &leading);
+                CGPoint origin;
+                CTFrameGetLineOrigins(frame, CFRangeMake(i, 1), &origin);
+                
+                if ( (linkableComponents.position<lineRange.location && linkableComponents.position+linkableComponents.text.length>(u_int16_t)(lineRange.location)) || (linkableComponents.position>=lineRange.location && linkableComponents.position<lineRange.location+lineRange.length))
+                {
+                    CGFloat secondaryOffset;
+                    CGFloat primaryOffset = CTLineGetOffsetForStringIndex(CFArrayGetValueAtIndex(frameLines,i), linkableComponents.position, &secondaryOffset);
+                    CGFloat primaryOffset2 = CTLineGetOffsetForStringIndex(CFArrayGetValueAtIndex(frameLines,i), linkableComponents.position+linkableComponents.text.length, NULL);
+                    
+                    CGFloat button_width = primaryOffset2 - primaryOffset;
+                    
+                    RTLabelButton *button = [[RTLabelButton alloc] initWithFrame:CGRectMake(primaryOffset+origin.x, height, button_width, ascent+descent)];
+                    
+                    
+                    if (linkableComponents.componentIndex == self.currentSelectedButtonComponentIndex) {
+                        CGContextSaveGState(context);
+                        CGContextTranslateCTM(context, 0, _optimumSize.height); // B
+                        CGContextScaleCTM(context, 1, -1);                     //A
+                        CGContextSetRGBFillColor(context, 1, 1, 0.5, 1);
+                        CGContextFillRect(context, CGRectMake(button.frame.origin.x - 2, button.frame.origin.y - 4, button.frame.size.width + 4, button.frame.size.height));
+                        CGContextStrokePath(context);
+                        CGContextRestoreGState(context);
+                    }
+                    
+                    
+                    [button setComponentIndex:linkableComponents.componentIndex];
+                    
+                    [button setUrl:[NSURL URLWithString:[linkableComponents.attributes objectForKey:@"href"]]];
+                    [button addTarget:self action:@selector(onButtonTouchDown:) forControlEvents:UIControlEventTouchDown];
+                    [button addTarget:self action:@selector(onButtonTouchUpOutside:) forControlEvents:UIControlEventTouchUpOutside];
+                    [button addTarget:self action:@selector(onButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+//                    [self addSubview:button];
+                    
+                }
+                
+                origin.y = self.frame.size.height - origin.y;
+                height = origin.y + descent + _lineSpacing;
+            }
+        }
+    }
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
 	self.visibleRange = CTFrameGetVisibleStringRange(frame);
 
 	CFRelease(thisFont);
@@ -735,7 +829,6 @@
 	RTLabelButton *button = (RTLabelButton*)sender;
 	[self setCurrentSelectedButtonComponentIndex:-1];
 	[self setNeedsDisplay];
-
 	if ([self.delegate respondsToSelector:@selector(rtLabel:didSelectLinkWithURL:)])
 	{
 		[self.delegate rtLabel:self didSelectLinkWithURL:button.url];

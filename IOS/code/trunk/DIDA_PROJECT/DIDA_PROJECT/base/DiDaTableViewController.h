@@ -35,5 +35,9 @@
 
 -(CellPosition)positionForCellAtIndex:(NSIndexPath*)indexPath;
 
+- (void)addPullToRefreshWithActionHandler:(void (^)(void))actionHandler;
+- (void)addInfiniteScrollingWithActionHandler:(void (^)(void))actionHandler;
+
+
 
 @end

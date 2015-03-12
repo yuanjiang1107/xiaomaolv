@@ -27,7 +27,7 @@
     CGContextBeginPath(context);
     CGContextSetLineWidth(context, 0.5);
     CGContextSetStrokeColorWithColor(context, [UIColor lightGrayColor].CGColor);
-    
+    self.backgroundColor = [UIColor clearColor];
     CGFloat lengths[] = {3.0,3.0};
     CGContextSetLineDash(context, 0, lengths, 2);
     

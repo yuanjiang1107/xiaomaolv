@@ -14,7 +14,7 @@
 #define catalogViewTag  11011012
 
 
-@interface DiDaContentTableViewController ()
+@interface DiDaContentTableViewController ()<ContentViewToolBarDelegate,CatalogDelegate>
 
 @property(nonatomic, strong)UIButton *contentsTableButton;
 
@@ -38,7 +38,7 @@
     [self.view addSubview:self.contentsTableButton];
     
     self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"目录"
-                                                                              style:UIBarButtonItemStyleDone
+                                                                              style:UIBarButtonItemStyleBordered
                                                                              target:self
                                                                              action:@selector(rightItemEvent:)];
     
@@ -57,7 +57,7 @@
 
 -(void)showCatalog{
     CatalogView *catalogView = [[CatalogView alloc] initWithList:@[@"发布人信息", @"梦想摘要", @"梦想详情", @"回报方案", @"主人动态"]];
-    catalogView.frame = CGRectMake(0, 64, self.view.width, self.view.height - 64);
+    catalogView.frame = CGRectMake(0, 0, self.view.width, self.view.height - 64);
     catalogView.delegate = self;
     catalogView.tag = catalogViewTag;
     [self.view  addSubview:catalogView];
@@ -77,7 +77,13 @@
     self.showingCatalog = NO;
 }
 
+-(void)catalogDidSelectedItemWith:(NSInteger)index title:(NSString*)title{
+    
+}
 
+-(void)contentViewToolBarDidSelectedItem:(NSInteger)index{
+    
+}
 
 -(void)contentsTableButtonEvent:(UIButton*)sender{
     if (self.showingTool == NO) {

@@ -28,6 +28,8 @@
 
 #define bottomToolHeight 49
 
+#define navigatorHeight 64
+
 @implementation ChatViewController
 
 -(void)addTestMessage{
@@ -61,27 +63,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.title = @"哇咔咔";
     self.bottomTool = [[UIView alloc] init];
     [self.view addSubview:self.bottomTool];
     self.bottomTool.backgroundColor = DIDA_NAVIGATIONBAR_COLOR;
-//    self.button = [UIButton buttonWithType:UIButtonTypeSystem];
-//    [self.button setTitle:@"show" forState:UIControlStateNormal];
-//    self.button.frame = CGRectMake(0, 0, 60, 40);
-//    [self.bottomTool addSubview:self.button];
-//    self.button.centerX = self.bottomTool.width / 2;
-//    [self.button addTarget:self action:@selector(inputRequest:) forControlEvents:UIControlEventTouchUpInside];
-//    [self addTestMessage];
-    
-        self.fetchController = [ChatMessage  MR_fetchAllSortedBy:@"creatTime"
+    self.fetchController = [ChatMessage  MR_fetchAllSortedBy:@"creatTime"
                                                        ascending:YES
                                                    withPredicate:nil
                                                          groupBy:nil
                                                         delegate:self];
 
-    
-    
     self.bottomTool.frame = CGRectMake(0, self.view.height - bottomToolHeight, self.view.width, bottomToolHeight);
-    self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height - bottomToolHeight);
+//    self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height - bottomToolHeight);
     
     self.inputField = [[UITextField alloc] initWithFrame:CGRectMake(8, 8, self.view.width - 72, 34)];
     [self.bottomTool addSubview:self.inputField];
@@ -126,15 +119,23 @@
     [self.view bringSubviewToFront:self.bottomTool];
 }
 
+-(void)firstWillApear{
+    [super firstWillApear];
+    [self.tableView scrollToRowAtIndexPath:[self lastCellPath] atScrollPosition:UITableViewScrollPositionTop animated:NO];
+}
+
 -(void)firstDidApear{
     [super firstDidApear];
-    self.tableView.scrollsToTop = YES;
 }
 
 -(void)firstDidLayoutSubViews{
     [super firstDidLayoutSubViews];
+    self.tableView.frame = CGRectMake(0, 0, self.view.width, self.view.height - bottomToolHeight);
+    
     [self.tableView scrollToRowAtIndexPath:[self lastCellPath] atScrollPosition:UITableViewScrollPositionTop animated:NO];
 
+
+    self.bottomTool.bottom = self.view.height;
 }
 
 
@@ -229,6 +230,7 @@
     if (![self.inputField.text isEqualToString:@""]) {
         [self sendAndSaveMessage:textField.text];
     }
+    self.inputField.text = @"";
     return YES;
 }
 
@@ -247,8 +249,11 @@
     NSTimeInterval time = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] floatValue];
     NSInteger options = [[info objectForKey:UIKeyboardAnimationCurveUserInfoKey] integerValue];
     
-    [self changeContentFrame:rect.origin.y duration:time options:options];
+    CGRect rect1 = [[UIApplication sharedApplication].keyWindow convertRect:rect toView:self.view];
+    [self changeContentFrame:rect1.origin.y duration:time options:options];
 }
+
+
 
 
 
@@ -261,27 +266,6 @@
     self.bottomTool.bottom = offset;
     [UIView commitAnimations];
     
-    //position tableview
-    NSIndexPath *path = [self lastCellPath];
-    CGRect rect;
-    if (path) {
-        rect = [self.tableView rectForRowAtIndexPath:[self lastCellPath]];
-    }
-    CGFloat cellBottom = CGRectGetMaxY(rect) + 64;
-    CGFloat keyboardBottom = offset - bottomToolHeight;
-    if ((cellBottom) > (keyboardBottom)) {
-        CGFloat dValue = cellBottom - keyboardBottom;
-        CGFloat tableViewOffset = self.view.height - dValue;
-        if (tableViewOffset < offset) {
-            tableViewOffset = offset;
-        }
-        [UIView beginAnimations:nil context:NULL];
-        [UIView setAnimationBeginsFromCurrentState:YES];
-        [UIView setAnimationDuration:duration];
-        [UIView setAnimationCurve:options];
-        self.tableView.bottom = tableViewOffset - bottomToolHeight;
-        [UIView commitAnimations];
-    }
     
     if (offset == self.view.height) {
         [UIView beginAnimations:nil context:NULL];
@@ -290,8 +274,33 @@
         [UIView setAnimationCurve:options];
         self.tableView.bottom = self.view.height - bottomToolHeight;
         [UIView commitAnimations];
-
+        return;
     }
+    
+    
+    //position tableview
+    NSIndexPath *path = [self lastCellPath];
+    CGRect rect;
+    if (path) {
+        rect = [self.tableView rectForRowAtIndexPath:[self lastCellPath]];
+    }
+    CGFloat cellBottom = CGRectGetMaxY(rect);
+    CGFloat keyboardBottom = offset - bottomToolHeight;
+    if ((cellBottom) > (keyboardBottom)) {
+        CGFloat dValue = cellBottom - keyboardBottom;
+        CGFloat tableViewOffset = self.tableView.height - dValue;
+        if (tableViewOffset < offset) {
+            tableViewOffset = offset - bottomToolHeight;
+        }
+        [UIView beginAnimations:nil context:NULL];
+        [UIView setAnimationBeginsFromCurrentState:YES];
+        [UIView setAnimationDuration:duration];
+        [UIView setAnimationCurve:options];
+        self.tableView.bottom = tableViewOffset;
+        [UIView commitAnimations];
+    }
+    
+ 
     
 }
 

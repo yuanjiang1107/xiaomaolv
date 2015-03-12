@@ -22,6 +22,8 @@
     NSRange  range = NSMakeRange(prefix.length, numberString.length + 1);
     NSMutableAttributedString *str = [[NSMutableAttributedString alloc] initWithString:fullstr];
     [str addAttribute:NSForegroundColorAttributeName value:DIDA_ORANGE_COLOR range:range];
+    [str addAttribute:NSBackgroundColorAttributeName value:[UIColor greenColor] range:range];
+
     [str addAttribute:NSFontAttributeName value:[UIFont boldSystemFontOfSize:25.0f] range:range];
     
     return str;

@@ -62,10 +62,9 @@ CREATE_STRONG UILabel *content;
     [self showBg];
 }
 
--(CGFloat)heightForCellWidth:(id)data{
-    [self configCellWithData:nil position:CellPositionTop];
-    CGSize size = [self systemLayoutSizeFittingSize:UILayoutFittingCompressedSize];
++(CGFloat)heightForClassCellWidth:(id)data position:(CellPosition)position{
     return 200;
+ 
 }
 
 

@@ -82,7 +82,8 @@ CREATE_ASSIGN NSInteger currentPage;
     view.frame = CGRectMake(0, 0, [UIDevice screenWidth], 140);
     
     self.control = [[DiDaSegmentControl alloc] initWithTitle:@[@"主人的梦想", @"主人的动态"]
-                                               eventCallBack:^(NSInteger selectedIndex) {
+                                                currentIndex:-1
+                                               eventCallBack:^(BOOL selected, NSInteger selectedIndex) {
                                                    self.currentPage = selectedIndex;
                                                }];
     [self.control setSelectedIndex:self.currentPage];

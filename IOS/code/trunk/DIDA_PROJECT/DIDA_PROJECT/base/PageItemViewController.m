@@ -12,26 +12,55 @@
 @interface PageItemViewController ()
 
 @property(nonatomic, strong)UIImageView *imageView;
+@property(nonatomic, strong)NSString *imageUrl;
+
 
 @end
 
 @implementation PageItemViewController
 
+-(instancetype)initWithImageUrl:(NSString*)imageUrl{
+    self = [super init];
+    if (self) {
+        self.imageUrl = imageUrl;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.view.width, 20)];
-    self.imageView.backgroundColor = [UIColor greenColor];
+    self.view.backgroundColor = [UIColor blackColor];
+    self.imageView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+    self.imageView.centerX = self.view.width / 2;
+    self.imageView.centerY = self.view.height / 2;
     
-    UIView *view = [[UIView alloc] initWithFrame:CGRectMake(10, self.view.height - 20, self.view.width - 20, 20)];
-    view.backgroundColor = [UIColor redColor];
-//    
-//    [self.imageView  sd_setImageWithURL:[NSURL URLWithString:@"http://99touxiang.com/public/upload/nvsheng/237/2_111109140942_41.jpg"] placeholderImage:nil
-//                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//                                  
-//                              }];
+    block_self;
+    [self.imageView  sd_setImageWithURL:[NSURL URLWithString:self.imageUrl] placeholderImage:nil
+                              completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+                                  CGFloat width = image.size.width;
+                                  CGFloat height = image.size.height;
+                                  if (image.size.width > bself.view.width) {
+                                      width = bself.view.width;
+                                  }
+                                  if (image.size.width > bself.view.width) {
+                                      height = bself.view.height;
+                                  }
+                                  CGFloat coefficientH = width / image.size.width  ;
+                                  CGFloat coefficientV = height / image.size.height ;
+                                  CGFloat coefficient;
+                                  coefficient = (coefficientH < coefficientV) ? coefficientH : coefficientV;
+                                
+                                  CGRect rect = CGRectMake(0, 0,image.size.width * coefficient, image.size.height * coefficient);
+                                  
+                                  [UIView animateWithDuration:0.5 animations:^{
+                                      bself.imageView.frame = rect;
+                                      bself.imageView.centerX = self.view.width / 2;
+                                      bself.imageView.centerY = self.view.height / 2;
+                                      
+                                  }];
+                              }];
     [self.view addSubview:self.imageView];
-    [self.view addSubview:view];
-    // Do any additional setup after loading the view.
+    self.imageView.backgroundColor = [UIColor greenColor];
 }
 
 - (void)didReceiveMemoryWarning {
